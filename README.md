@@ -1,5 +1,3 @@
-# ArgalisMap_Editor
-
 <h1 align="center">
     <br>
       <a href="https://github.com/Siliver4/ArgalisMap_Editor">
