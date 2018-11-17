@@ -5,6 +5,7 @@
  */
 package argalismap_editor.controller;
 
+import argalismap_editor.model.paint.PaintManager;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -14,11 +15,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 /**
@@ -27,11 +30,19 @@ import javafx.stage.Stage;
  */
 public class MainViewController implements Initializable {
     
+    PaintManager pM;
+    
     @FXML
     private Label label;
     
     @FXML
     private MenuItem menuHelpAbout;
+    
+    @FXML
+    private ImageView imageView1;
+    
+    @FXML
+    private Canvas canvas1;
     
     @FXML
     private void handleButtonAction(ActionEvent event) {
@@ -41,8 +52,14 @@ public class MainViewController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        pM = new PaintManager(canvas1, imageView1);
+        plugFunction();
     }    
+    
+    public void plugFunction() {
+        pM.setCanvasDimensions(10, 10, 40, 40);
+        pM.setImageViewDimension(40, 40);
+    }
     
     @FXML
     private void openQuitView(ActionEvent event) {
