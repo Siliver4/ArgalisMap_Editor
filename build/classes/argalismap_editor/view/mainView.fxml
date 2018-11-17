@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox minWidth="600.0" prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="argalismap_editor.controller.MainViewController">
+<VBox minWidth="600.0" prefHeight="675.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="argalismap_editor.controller.MainViewController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -28,7 +28,15 @@
                         <MenuItem disable="true" mnemonicParsing="false" text="From JPEG" />
                      </items></Menu>
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Save" />
+                  <Menu mnemonicParsing="false" text="Save As...">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#saveToARGALIS" text="ARGALIS..." />
+                        <MenuItem mnemonicParsing="false" onAction="#saveToPNG" text="PNG..." />
+                        <MenuItem mnemonicParsing="false" onAction="#saveToGIF" text="GIF..." />
+                        <MenuItem mnemonicParsing="false" onAction="#saveToJPG" text="JPG..." />
+                        <MenuItem mnemonicParsing="false" onAction="#saveToJPEG" text="JPEG..." />
+                     </items>
+                  </Menu>
             <MenuItem mnemonicParsing="false" text="Load" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" onAction="#openQuitView" text="Quit" />
@@ -63,16 +71,16 @@
             <Font size="18.0" />
           </font>
         </Label>
-            <SplitPane fx:id="main_splitPane1" dividerPositions="0.0" layoutX="155.0" layoutY="50.0" prefHeight="375.0" prefWidth="640.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <SplitPane fx:id="main_splitPane1" dividerPositions="0.4" layoutX="155.0" layoutY="50.0" prefHeight="675.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <items>
-                  <VBox maxWidth="300.0" minHeight="400.0" minWidth="200.0" prefHeight="400.0" prefWidth="200.0">
+                  <VBox maxWidth="600.0" minHeight="400.0" minWidth="200.0" prefHeight="600.0" prefWidth="450.0">
                      <children>
                         <Label alignment="CENTER" contentDisplay="CENTER" text="    TileSet view" />
-                        <ScrollPane hbarPolicy="ALWAYS" vbarPolicy="ALWAYS" VBox.vgrow="ALWAYS">
+                        <ScrollPane cache="true" hbarPolicy="ALWAYS" pannable="true" vbarPolicy="ALWAYS" VBox.vgrow="ALWAYS">
                           <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+                            <AnchorPane>
                                  <children>
-                                    <ImageView fx:id="imageView1" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fx:id="imageView1" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../../res/argalis_logo.png" />
                                        </image></ImageView>
@@ -82,7 +90,7 @@
                         </ScrollPane>
                      </children>
                   </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
+                  <VBox prefHeight="600.0" prefWidth="700.0">
                      <children>
                         <Label alignment="CENTER" contentDisplay="CENTER" text="    Map view" textAlignment="CENTER" />
                         <ScrollPane hbarPolicy="ALWAYS" minHeight="400.0" minWidth="400.0" prefHeight="400.0" prefWidth="200.0" vbarPolicy="ALWAYS" VBox.vgrow="ALWAYS">

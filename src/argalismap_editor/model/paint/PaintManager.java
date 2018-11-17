@@ -5,12 +5,14 @@
  */
 package argalismap_editor.model.paint;
 
+import argalismap_editor.model.saveAndLoadFile.SaveToFile;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
- *
+ * Manager class to handle interaction between canvasDrawing and imageViewPicking classes.
+ * 
  * @author Alexandre 'ROKH' MAILLIU
  */
 public class PaintManager {
@@ -58,5 +60,50 @@ public class PaintManager {
      */
     public Image getSelectedTile() {
         return imageViewPicking.getSelectedTile();
+    }
+    
+    /**
+     * Get the selected tile value from the imageViewPicking and returns it as an int.
+     * 
+     * @return the selected tile value
+     */
+    public int getSelectedTileValue() {
+        return imageViewPicking.getSelectedTileValue();
+    }
+    
+    /**
+     * save the canvasDrawing content as an '.argalis' file, Meaning it contains
+     * all the tile values as integers.
+     */
+    public void saveToARGALIS() {
+        canvasDrawing.saveToFileFromIntegerTable();
+    }
+    
+    /**
+     * save the canvasDrawing content as an '.png' file.
+     */
+    public void saveToPNG() {
+        canvasDrawing.saveToPNG();
+    }
+    
+    /**
+     * save the canvasDrawing content as an '.gif' file.
+     */
+    public void saveToGIF() {
+        canvasDrawing.saveToGIF();
+    }
+    
+    /**
+     * save the canvasDrawing content as an '.jpg' file.
+     */
+    public void saveToJPG() {
+        canvasDrawing.saveToJPG();
+    }
+    
+    /**
+     * save the canvasDrawing content as an '.jpeg' file.
+     */
+    public void saveToJPEG() {
+        canvasDrawing.saveToJPEG();
     }
 }

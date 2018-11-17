@@ -6,7 +6,6 @@
 package argalismap_editor.model.paint;
 
 import javafx.scene.canvas.Canvas;
-import javafx.scene.image.Image;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -56,18 +55,7 @@ public class CanvasDrawingTest {
         assertEquals(1,classUnderTest.getTileIndex(100,47));
         assertEquals(2,classUnderTest.getTileIndex(200,47));
         assertEquals(9,classUnderTest.getTileIndex(999,47));
-        try {
-            assertEquals(9,classUnderTest.getTileIndex(1000,47));
-            assertTrue(false);
-        } catch ( IndexOutOfBoundsException e ) {
-            assertTrue(true);
-        }
-        try {
-            assertEquals(0,classUnderTest.getTileIndex(-1,47));
-            assertTrue(false);
-        } catch ( IndexOutOfBoundsException e ) {
-            assertTrue(true);
-        }
+        assertEquals(10,classUnderTest.getTileIndex(55,147));
     }
 
     /**

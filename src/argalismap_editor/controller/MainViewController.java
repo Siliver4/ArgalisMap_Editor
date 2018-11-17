@@ -57,8 +57,8 @@ public class MainViewController implements Initializable {
     }    
     
     public void plugFunction() {
-        pM.setCanvasDimensions(10, 10, 40, 40);
-        pM.setImageViewDimension(40, 40);
+        pM.setCanvasDimensions(4, 4, 107, 107);
+        pM.setImageViewDimension(107, 107);
     }
     
     @FXML
@@ -99,4 +99,44 @@ public class MainViewController implements Initializable {
         }
     }
     
+    /**
+     * save the canvasDrawing content as an '.argalis' file, Meaning it contains
+     * all the tile values as integers.
+     */
+    @FXML
+    public void saveToARGALIS() {
+        pM.saveToARGALIS();
+    }
+    
+    /**
+     * save the canvasDrawing content as an '.png' file.
+     */
+    @FXML
+    public void saveToPNG() {
+        pM.saveToPNG();
+    }
+    
+    /**
+     * save the canvasDrawing content as an '.gif' file.
+     */
+    @FXML
+    public void saveToGIF() {
+        pM.saveToGIF();
+    }
+    
+    /**
+     * save the canvasDrawing content as an '.jpg' file.
+     */
+    @FXML
+    public void saveToJPG() {
+        pM.saveToJPG();
+    }
+    
+    /**
+     * save the canvasDrawing content as an '.jpeg' file.
+     */
+    @FXML
+    public void saveToJPEG() {
+        pM.saveToJPEG();
+    }
 }

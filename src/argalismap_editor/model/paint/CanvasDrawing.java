@@ -5,13 +5,16 @@
  */
 package argalismap_editor.model.paint;
 
+import argalismap_editor.model.saveAndLoadFile.SaveToFile;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 
 /**
- *
+ * represents the Canvas from the fxml file and its functionalities,
+ * such as being able to draw image on it.
+ * 
  * @author Alexandre 'ROKH' MAILLIU
  */
 public class CanvasDrawing {
@@ -25,6 +28,11 @@ public class CanvasDrawing {
     private int tileHeight;
     
     /**
+     * represents the entire canvas tile value in a 1 dimension array
+     */
+    private int[] tileValues;
+    
+    /**
      * Constructor.
      * 
      * @param canvas the canvas from the fxml file
@@ -33,25 +41,9 @@ public class CanvasDrawing {
     public CanvasDrawing(Canvas canvas, PaintManager pM) {
         this.canvas = canvas;
         this.pM = pM;
+        this.tileValues = new int[0];
         initializeHandler();
-    }
-    
-    /**
-     * Get the index position of the tile we clicked on, considering the tileSet 
-     * as a 1 dimension array, starting from top left corner at index 0.
-     * 
-     * @param posX the abscissa position in the canvas
-     * @param posY the ordinate position in the canvas
-     * @return the index of the corresponding tile
-     * @throws IndexOutOfBoundsException if outside the canvas dimension
-     */
-    public int getTileIndex(int posX, int posY) throws IndexOutOfBoundsException {
-        if( (posX >= canvas.getWidth()) || (posY >= canvas.getHeight()) || (posX < 0) || (posY < 0) ) 
-            throw new IndexOutOfBoundsException();
-        int x = posX / tileWidth;
-        int y = posY / tileHeight;
-        return x + y * columnNb;
-    } 
+    }    
     
     /**
      * Set the dimension of CanvasDrawing.
@@ -68,6 +60,34 @@ public class CanvasDrawing {
         this.tileHeight = tileHeight;
         canvas.setHeight(lineNb * tileHeight);
         canvas.setWidth(columnNb * tileWidth);
+        tileValues = new int[lineNb * columnNb];
+    }
+    
+    public void saveToFileFromIntegerTable() {
+        StringBuilder data = new StringBuilder();
+        for (int i = 0; i < lineNb; i++) {
+            for (int j = 0; j < columnNb; j++) {
+                data.append(tileValues[j + i * columnNb] + " ");
+            }
+            data.append("\n");
+        }
+        SaveToFile.saveFromString(data.toString());
+    }
+    
+    public void saveToPNG() {
+        SaveToFile.saveFromCanvasToPNG(canvas);
+    }
+    
+    public void saveToGIF() {
+        SaveToFile.saveFromCanvasToGIF(canvas);
+    }
+    
+    public void saveToJPG() {
+        SaveToFile.saveFromCanvasToJPG(canvas);
+    }
+    
+    public void saveToJPEG() {
+        SaveToFile.saveFromCanvasToJPEG(canvas);
     }
     
     /**
@@ -77,9 +97,32 @@ public class CanvasDrawing {
      * @param x the abscissa position of the draw
      * @param y the ordinate position of the draw 
      */
-    public void drawTile(Image img, int x, int y) {
+    private void drawTile(Image img, int x, int y) {
         canvas.getGraphicsContext2D().drawImage(img, x, y);
     }
+    
+    /**
+     * Does 2 things, first set the drawn tile value to the table tileValues,
+     * second draw the tile to the canvas.
+     * 
+     * @param posX the click abscissa position inside the canvas
+     * @param posY the click ordinate position inside the canvas
+     */
+    private void setAndDrawTile(int posX, int posY) {
+        if( (posX < canvas.getWidth()) || (posY < canvas.getHeight()) || (posX >= 0) || (posY >= 0) ) {
+            
+            // set the tile value
+            int xTabIndex = posX / tileWidth;
+            int yTabIndex = posY / tileHeight;
+            int index = xTabIndex + yTabIndex * columnNb;
+            tileValues[index] = pM.getSelectedTileValue();
+
+            // draw the tile
+            int xCanvas = xTabIndex * tileWidth;
+            int yCanvas = yTabIndex * tileHeight;
+            drawTile(pM.getSelectedTile(), xCanvas, yCanvas);
+        }
+    } 
     
     /**
      * initialize the onMouse Handler for this Object
@@ -97,7 +140,7 @@ public class CanvasDrawing {
  
             @Override
             public void handle(MouseEvent event) {
-                
+                setAndDrawTile((int)event.getX(),(int)event.getY());
             }
         });
  
@@ -105,13 +148,9 @@ public class CanvasDrawing {
  
             @Override
             public void handle(MouseEvent event) {
-                int x = ((int) event.getX() / tileWidth) * tileWidth;
-                int y = ((int) event.getY() / tileHeight) * tileHeight;
-                drawTile(pM.getSelectedTile(), x, y);
+                setAndDrawTile((int)event.getX(),(int)event.getY());
             }
         });
     }
-    
-    
     
 }

@@ -15,7 +15,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 /**
- *
+ * represents the ImageView from the fxml file and its functionalities,
+ * such as being able to pick up crop image from it.
+ * 
  * @author Alexandre 'ROKH' MAILLIU
  */
 public class ImageViewPicking {
@@ -29,9 +31,14 @@ public class ImageViewPicking {
     private int columnSelected;
     
     /**
-     * the current selected crop image from this canvas content, it represent a tile.
+     * the current selected tile, as a cropped image from this canvas content
      */
     private WritableImage tileSelected;
+    
+    /**
+     * the current selected tile value
+     */
+    private int tileSelectedValue;
     
     /**
      * Constructor.
@@ -59,23 +66,6 @@ public class ImageViewPicking {
     }
     
     /**
-     * Get the index position of the tile we clicked on, considering the tileSet 
-     * as a 1 dimension array, starting from top left corner at index 0.
-     * 
-     * @param posX the abscissa position in the canvas
-     * @param posY the ordinate position in the canvas
-     * @return the index of the corresponding tile
-     * @throws IndexOutOfBoundsException if outside the canvas dimension
-     */
-    public int getTileIndex(int posX, int posY) throws IndexOutOfBoundsException {
-        if( (posX >= imageView.getImage().getWidth()) || (posY >= imageView.getImage().getHeight()) || (posX < 0) || (posY < 0) ) 
-            throw new IndexOutOfBoundsException();
-        int x = posX / tileWidth;
-        int y = posY / tileHeight;
-        return x + y * columnNb;
-    } 
-    
-    /**
      * Get the current selected tile.
      * 
      * @return the current selected tile
@@ -83,6 +73,41 @@ public class ImageViewPicking {
     public Image getSelectedTile() {
         return tileSelected;
     }
+    
+    /**
+     * Get the current selected tile value.
+     * 
+     * @return the current selected tile value
+     */
+    public int getSelectedTileValue() {
+        return tileSelectedValue;
+    }
+    
+    /**
+     * Does 2 things, first set the selected tile value from the ImageView,
+     * second pick up the tile as a cropped image and keep it in tileSelect.
+     * 
+     * @param posX the click abscissa position inside the ImageView
+     * @param posY the click ordinate position inside the ImageView
+     */
+    private void setAndPickTile(int posX, int posY) {
+        if( (posX < imageView.getImage().getWidth()) || (posY < imageView.getImage().getHeight()) || (posX >= 0) || (posY >= 0) ) {
+            
+            // set the selected tile value
+            int xTabIndex = posX / tileWidth;
+            int yTabIndex = posY / tileHeight;
+            tileSelectedValue = xTabIndex + yTabIndex * columnNb;
+        
+            // pick up the tile as a cropped image from the ImageView
+            SnapshotParameters parameters = new SnapshotParameters();
+            parameters.setFill(Color.WHITE);
+            int xImageView = xTabIndex * tileWidth;
+            int yImageView = yTabIndex * tileHeight;
+            parameters.setViewport(new Rectangle2D(xImageView, yImageView, tileWidth, tileHeight));
+            tileSelected = new WritableImage(tileWidth, tileHeight);
+            imageView.snapshot(parameters, tileSelected);
+        }
+    } 
     
     /**
      * initialize the onMouse Handler for this Object
@@ -101,7 +126,7 @@ public class ImageViewPicking {
  
             @Override
             public void handle(MouseEvent event) {
-                
+                setAndPickTile((int) event.getX(), (int) event.getY());
             }
         });
  
@@ -109,13 +134,7 @@ public class ImageViewPicking {
  
             @Override
             public void handle(MouseEvent event) {
-                SnapshotParameters parameters = new SnapshotParameters();
-                parameters.setFill(Color.WHITE);
-                int x = ((int) event.getX() / tileWidth) * tileWidth;
-                int y = ((int) event.getY() / tileHeight) * tileHeight;
-                parameters.setViewport(new Rectangle2D(x, y, tileWidth, tileHeight));
-                tileSelected = new WritableImage(tileWidth, tileHeight);
-                imageView.snapshot(parameters, tileSelected);
+                setAndPickTile((int) event.getX(), (int) event.getY());
             }
         });
     }
