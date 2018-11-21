@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!--/*
  * The MIT License
  *
@@ -22,7 +23,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */-->
- 
+
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
@@ -46,21 +47,22 @@
             <MenuItem mnemonicParsing="false" onAction="#openNewMapView" text="New Map..." />
             <Menu mnemonicParsing="false" text="Import TileSet">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="From PNG" />
-                        <MenuItem disable="true" mnemonicParsing="false" text="From BMP ( Bitmap )" />
-                        <MenuItem disable="true" mnemonicParsing="false" text="From JPEG" />
+                        <MenuItem mnemonicParsing="false" onAction="#loadTileSetImageFromPNG" text="From PNG..." />
+                        <MenuItem mnemonicParsing="false" onAction="#loadTileSetImageFromGIF" text="From GIF..." />
+                        <MenuItem mnemonicParsing="false" onAction="#loadTileSetImageFromJPG" text="From JPG..." />
+                        <MenuItem mnemonicParsing="false" onAction="#loadTileSetImageFromJPEG" text="From JPEG..." />
                      </items></Menu>
             <SeparatorMenuItem mnemonicParsing="false" />
                   <Menu mnemonicParsing="false" text="Save As...">
                      <items>
-                        <MenuItem mnemonicParsing="false" onAction="#saveToARGALIS" text="ARGALIS..." />
-                        <MenuItem mnemonicParsing="false" onAction="#saveToPNG" text="PNG..." />
-                        <MenuItem mnemonicParsing="false" onAction="#saveToGIF" text="GIF..." />
-                        <MenuItem mnemonicParsing="false" onAction="#saveToJPG" text="JPG..." />
-                        <MenuItem mnemonicParsing="false" onAction="#saveToJPEG" text="JPEG..." />
+                        <MenuItem mnemonicParsing="false" onAction="#saveMapToARGALIS" text="ARGALIS..." />
+                        <MenuItem mnemonicParsing="false" onAction="#saveMapToPNG" text="PNG..." />
+                        <MenuItem mnemonicParsing="false" onAction="#saveMapToGIF" text="GIF..." />
+                        <MenuItem mnemonicParsing="false" onAction="#saveMapToJPG" text="JPG..." />
+                        <MenuItem mnemonicParsing="false" onAction="#saveMapToJPEG" text="JPEG..." />
                      </items>
                   </Menu>
-            <MenuItem mnemonicParsing="false" text="Load" />
+            <MenuItem mnemonicParsing="false" onAction="#loadMapFromARGALIS" text="Load" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" onAction="#openQuitView" text="Quit" />
           </items>
@@ -81,7 +83,7 @@
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
           <items>
-            <MenuItem mnemonicParsing="false" text="Report Issue..." />
+            <MenuItem mnemonicParsing="false" onAction="#openReportIssue" text="Report Issue..." />
                   <MenuItem mnemonicParsing="false" onAction="#openAboutView" text="About" />
           </items>
         </Menu>

@@ -50,30 +50,31 @@ public class SaveToFile {
    */
   public static boolean saveFromString(String data) {
 
-    try {
-      // declaration of the resources
-      FileOutputStream fileOutputStream = null;
-      File file = fileChooser("argalis");
+    File file = fileChooser("argalis");
+    
+    if (file != null) {
+      try {
+        // declaration of the resources
+        FileOutputStream fileOutputStream = null;
 
-      if (file != null) {
-        try {
-          // use of the resources
-          fileOutputStream = new FileOutputStream(file);
-          fileOutputStream.write(data.getBytes());
-          fileOutputStream.flush();
-          return true;
+          try {
+            // use of the resources
+            fileOutputStream = new FileOutputStream(file);
+            fileOutputStream.write(data.getBytes());
+            fileOutputStream.flush();
+            return true;
 
-        } finally {
-          // closure of the resources
-          if (fileOutputStream != null) {
-            fileOutputStream.close();
+          } finally {
+            // closure of the resources
+            if (fileOutputStream != null) {
+              fileOutputStream.close();
+            }
           }
-        }
+      } catch (FileNotFoundException e1) {
+        e1.printStackTrace();
+      } catch (IOException e2) {
+        e2.printStackTrace();
       }
-    } catch (FileNotFoundException e1) {
-      e1.printStackTrace();
-    } catch (IOException e2) {
-      e2.printStackTrace();
     }
     return false;
   }
@@ -125,7 +126,7 @@ public class SaveToFile {
    * @param fileExtension the file extension
    */
   private static void saveFromCanvasToFile(Canvas canvas, String fileExtension) {
-
+    
     File file = fileChooser(fileExtension);
 
     if (file != null) {

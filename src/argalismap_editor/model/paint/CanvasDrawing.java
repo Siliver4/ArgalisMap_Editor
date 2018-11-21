@@ -23,6 +23,7 @@
  */
 package argalismap_editor.model.paint;
 
+import argalismap_editor.model.saveAndLoadFile.LoadFromFile;
 import argalismap_editor.model.saveAndLoadFile.SaveToFile;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
@@ -80,7 +81,7 @@ public class CanvasDrawing {
     canvas.setWidth(columnNb * tileWidth);
     tileValues = new int[lineNb * columnNb];
   }
-
+  
   public void saveToFileFromIntegerTable() {
     StringBuilder data = new StringBuilder();
     for (int i = 0; i < lineNb; i++) {
@@ -92,22 +93,34 @@ public class CanvasDrawing {
     SaveToFile.saveFromString(data.toString());
   }
 
+  /**
+   * save the canvasDrawing content as an '.png' file.
+   */
   public void saveToPNG() {
     SaveToFile.saveFromCanvasToPNG(canvas);
   }
 
+  /**
+   * save the canvasDrawing content as an '.gif' file.
+   */
   public void saveToGIF() {
     SaveToFile.saveFromCanvasToGIF(canvas);
   }
 
+  /**
+   * save the canvasDrawing content as an '.jpg' file.
+   */
   public void saveToJPG() {
     SaveToFile.saveFromCanvasToJPG(canvas);
   }
 
+  /**
+   * save the canvasDrawing content as an '.jpeg' file.
+   */
   public void saveToJPEG() {
     SaveToFile.saveFromCanvasToJPEG(canvas);
   }
-
+  
   /**
    * Draws an image at x,y location.
    *
@@ -120,14 +133,39 @@ public class CanvasDrawing {
   }
 
   /**
-   * Does 2 things, first set the drawn tile value to the table tileValues,
-   * second draw the tile to the canvas.
+   * Does 2 things, first set the tile value (going to be drawn) to the table 
+   * tileValues, second draw the tile to the canvas.
    *
-   * @param posX the click abscissa position inside the canvas
-   * @param posY the click ordinate position inside the canvas
+   * @param xIndex the column index of the cropped image from the PaintManager 
+   * going to be drawn in the canvas
+   * @param yIndex the line index of the cropped image from the PaintManager 
+   * going to be drawn in the canvas
    */
-  private void setAndDrawTile(int posX, int posY) {
-    if ((posX < canvas.getWidth()) || (posY < canvas.getHeight()) || (posX >= 0) || (posY >= 0)) {
+  public void setAndDrawTileByIndex(int xIndex, int yIndex) {
+    if ((xIndex < columnNb) && (yIndex < lineNb) && (xIndex >= 0) && (yIndex >= 0)) {
+
+      // set the tile value
+      int index = xIndex + yIndex * columnNb;
+      tileValues[index] = pM.getSelectedTileValue();
+
+      // draw the tile
+      int xCanvas = xIndex * tileWidth;
+      int yCanvas = yIndex * tileHeight;
+      drawTile(pM.getSelectedTile(), xCanvas, yCanvas);
+    }
+  }
+  
+  /**
+   * Does 2 things, first set the tile value (going to be drawn) to the table 
+   * tileValues, second draw the tile to the canvas.
+   *
+   * @param posX the canvas abscissa position where the cropped image from the PaintManager 
+   * is going to be drawn
+   * @param posY the canvas ordinate position where the cropped image from the PaintManager 
+   * is going to be drawn
+   */
+  public void setAndDrawTile(int posX, int posY) {
+    if ((posX < canvas.getWidth()) && (posY < canvas.getHeight()) && (posX >= 0) && (posY >= 0)) {
 
       // set the tile value
       int xTabIndex = posX / tileWidth;
@@ -169,6 +207,22 @@ public class CanvasDrawing {
         setAndDrawTile((int) event.getX(), (int) event.getY());
       }
     });
+  }
+  
+  public int getLineNb() {
+    return lineNb;
+  }
+
+  public int getColumnNb() {
+    return columnNb;
+  }
+
+  public int getTileWidth() {
+    return tileWidth;
+  }
+
+  public int getTileHeight() {
+    return tileHeight;
   }
 
 }

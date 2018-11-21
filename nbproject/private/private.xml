@@ -2,6 +2,15 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/AlexM/Documents/github/ArgalisMap_Editor/src/argalismap_editor/controller/MainViewController.java</file>
+            <file>file:/C:/Users/AlexM/Documents/github/ArgalisMap_Editor/src/argalismap_editor/model/paint/CanvasDrawing.java</file>
+            <file>file:/C:/Users/AlexM/Documents/github/ArgalisMap_Editor/src/argalismap_editor/model/saveAndLoadFile/SaveToFile.java</file>
+            <file>file:/C:/Users/AlexM/Documents/github/ArgalisMap_Editor/src/argalismap_editor/model/paint/ImageViewPicking.java</file>
+            <file>file:/C:/Users/AlexM/Documents/github/ArgalisMap_Editor/src/argalismap_editor/view/mainView.fxml</file>
+            <file>file:/C:/Users/AlexM/Documents/github/ArgalisMap_Editor/src/argalismap_editor/model/saveAndLoadFile/LoadFromFile.java</file>
+            <file>file:/C:/Users/AlexM/Documents/github/ArgalisMap_Editor/src/argalismap_editor/model/paint/PaintManager.java</file>
+            <file>file:/C:/Users/AlexM/Documents/github/ArgalisMap_Editor/src/argalismap_editor/ArgalisMap_Editor.java</file>
+        </group>
     </open-files>
 </project-private>

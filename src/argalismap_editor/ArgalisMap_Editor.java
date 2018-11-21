@@ -30,7 +30,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- *
+ * Behold the Argalis Map Editor, who helps you drawing and building your 2D
+ * game maps easily. In a mature version, it will be able to handle : 
+ * collision tiles, event tiles, among other things... get it ?
+ * 
  * @author Alexandre 'ROKH' MAILLIU
  */
 public class ArgalisMap_Editor extends Application {

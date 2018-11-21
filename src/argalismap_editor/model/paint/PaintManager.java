@@ -23,6 +23,7 @@
  */
 package argalismap_editor.model.paint;
 
+import argalismap_editor.model.saveAndLoadFile.LoadFromFile;
 import argalismap_editor.model.saveAndLoadFile.SaveToFile;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
@@ -74,57 +75,94 @@ public class PaintManager {
   }
 
   /**
-   * Get the selected tile from the imageViewPicking and returns it as an Image.
+   * Get the selected tile image from the imageViewPicking and returns it.
    *
    * @return the selected tile
    */
   public Image getSelectedTile() {
     return imageViewPicking.getSelectedTile();
   }
-
+  
   /**
-   * Get the selected tile value from the imageViewPicking and returns it as an
-   * int.
+   * Get the selected tile value from the imageViewPicking and returns it.
    *
    * @return the selected tile value
    */
   public int getSelectedTileValue() {
     return imageViewPicking.getSelectedTileValue();
   }
-
+  
+  /**
+   * load an argalis file content, which is a integer table, and draws it to 
+   * the canvasDrawing's canvas.
+   * this method is a bit tricky, cause it needs to have both imageViewPicking 
+   * and canvasDrawing references to work between them.
+   */
+  public void loadMapFromARGALIS() {
+    LoadFromFile.loadFromArgalisFileToCanvasDrawing(imageViewPicking, canvasDrawing);
+  }
+  
+  /**
+   * load a tileSet from a png file image and put its content to the imageView
+   */
+  public void loadTileSetImageFromPNG() {
+    imageViewPicking.loadImageFromPNG();
+  }
+  
+  /**
+   * load a tileSet from a gif file image and put its content to the imageView
+   */
+  public void loadTileSetImageFromGIF() {
+    imageViewPicking.loadImageFromGIF();
+  }
+  
+  /**
+   * load a tileSet from a jpg file image and put its content to the imageView
+   */
+  public void loadTileSetImageFromJPG() {
+    imageViewPicking.loadImageFromJPG();
+  }
+  
+  /**
+   * load a tileSet from a jpeg file image and put its content to the imageView
+   */
+  public void loadTileSetImageFromJPEG() {
+    imageViewPicking.loadImageFromJPEG();
+  }
+  
   /**
    * save the canvasDrawing content as an '.argalis' file, Meaning it contains
    * all the tile values as integers.
    */
-  public void saveToARGALIS() {
+  public void saveMapToARGALIS() {
     canvasDrawing.saveToFileFromIntegerTable();
   }
 
   /**
    * save the canvasDrawing content as an '.png' file.
    */
-  public void saveToPNG() {
+  public void saveMapToPNG() {
     canvasDrawing.saveToPNG();
   }
 
   /**
    * save the canvasDrawing content as an '.gif' file.
    */
-  public void saveToGIF() {
+  public void saveMapToGIF() {
     canvasDrawing.saveToGIF();
   }
 
   /**
    * save the canvasDrawing content as an '.jpg' file.
    */
-  public void saveToJPG() {
+  public void saveMapToJPG() {
     canvasDrawing.saveToJPG();
   }
 
   /**
    * save the canvasDrawing content as an '.jpeg' file.
    */
-  public void saveToJPEG() {
+  public void saveMapToJPEG() {
     canvasDrawing.saveToJPEG();
   }
 }
