@@ -93,7 +93,7 @@
                   <VBox prefHeight="600.0" prefWidth="700.0">
                      <children>
                         <Label alignment="CENTER" contentDisplay="CENTER" text="    Map view" textAlignment="CENTER" />
-                        <ScrollPane hbarPolicy="ALWAYS" minHeight="400.0" minWidth="400.0" prefHeight="400.0" prefWidth="200.0" vbarPolicy="ALWAYS" VBox.vgrow="ALWAYS">
+                        <ScrollPane hbarPolicy="ALWAYS" minHeight="400.0" minWidth="400.0" pannable="true" prefHeight="400.0" prefWidth="200.0" vbarPolicy="ALWAYS" VBox.vgrow="ALWAYS">
                            <content>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
                                  <children>
