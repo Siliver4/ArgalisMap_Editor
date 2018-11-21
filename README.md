@@ -10,6 +10,8 @@
 
 Map editor for 2D Games
 - using Netbeans IDE (first time)
+- using Java 8.0
+- using Scene Builder
 
 <p align="center">
   <a href="https://github.com/Siliver4/ArgalisMap_Editor/releases">
