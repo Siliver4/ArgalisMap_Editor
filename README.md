@@ -34,20 +34,20 @@ Map editor for 2D Games
 
 <h1 align="center">
     <br>
-      Result as a png file saved :
+      You can save it as a png, gif, jpg, jpeg file format :
     <br>
       <a href="https://github.com/Siliver4/ArgalisMap_Editor">
-        <img src="argalis_demo/FirstCity.png" alt="ArgalisMap_Editor_PngSaveExemple" width="300">
+        <img src="argalis_demo/FirstCity.png" alt="ArgalisMap_Editor_PngSaveExemple" width="300px">
       </a>
     <br>
 </h1>
 
 <h1 align="center">
     <br>
-      Result as an argalis file saved :
+      For memory sake you can also save it as an '.argalis' file :
     <br>
       <a href="https://github.com/Siliver4/ArgalisMap_Editor">
-        <img src="argalis_demo/FirstCityArgalis.png" alt="ArgalisMap_Editor_ArgalisSaveExemple" width="300">
+        <img src="argalis_demo/FirstCityArgalis.png" alt="ArgalisMap_Editor_ArgalisSaveExemple" width="300px">
       </a>
     <br>
 </h1>
