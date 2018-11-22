@@ -1,6 +1,6 @@
 <h1 align="center">
     <br>
-      <a href="https://github.com/Siliver4/ArgalisMap_Editor">
+      <a href="https://github.com/Siliver4/ArgalisMap_Editor/src/res/argalis_logo.png">
         <img src="src/res/argalis_logo.png" alt="ArgalisMap_Editor_logo" width="200">
       </a>
     <br>
