@@ -8,11 +8,6 @@
     <br>
 </h1>
 
-Map editor for 2D Games
-- using Netbeans IDE (first time)
-- using Java 8.0
-- using JavaFX & Scene Builder
-
 <p align="center">
   <a href="https://github.com/Siliver4/ArgalisMap_Editor/releases">
     <img src="https://img.shields.io/github/release/Siliver4/ArgalisMap_Editor.svg">
@@ -21,3 +16,38 @@ Map editor for 2D Games
       <img src="https://img.shields.io/github/issues-closed-raw/Siliver4/ArgalisMap_Editor.svg">
   </a>
 </p>
+
+Map editor for 2D Games
+- using Netbeans IDE (first time)
+- using Java 8.0
+- using JavaFX & Scene Builder
+
+<h1 align="center">
+    <br>
+      Application full screen exemple :
+    <br>
+      <a href="https://github.com/Siliver4/ArgalisMap_Editor">
+        <img src="argalis_demo/Screenshot_FullScreen.png" alt="ArgalisMap_Editor_FullScreenExemple" width="747">
+      </a>
+    <br>
+</h1>
+
+<h1 align="center">
+    <br>
+      Result as a png file saved :
+    <br>
+      <a href="https://github.com/Siliver4/ArgalisMap_Editor">
+        <img src="argalis_demo/FirstCity.png" alt="ArgalisMap_Editor_PngSaveExemple" width="300">
+      </a>
+    <br>
+</h1>
+
+<h1 align="center">
+    <br>
+      Result as an argalis file saved :
+    <br>
+      <a href="https://github.com/Siliver4/ArgalisMap_Editor">
+        <img src="argalis_demo/FirstCityArgalis.png" alt="ArgalisMap_Editor_ArgalisSaveExemple" width="300">
+      </a>
+    <br>
+</h1>
