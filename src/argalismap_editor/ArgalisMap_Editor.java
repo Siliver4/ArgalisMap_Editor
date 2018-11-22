@@ -27,6 +27,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
@@ -44,6 +45,7 @@ public class ArgalisMap_Editor extends Application {
 
     Scene scene = new Scene(root);
 
+    stage.getIcons().add(new Image("res/argalis_logo.png"));
     stage.setTitle("Argalis Map Editor");
     stage.setMinWidth(640.0);
     stage.setMinHeight(485.0);

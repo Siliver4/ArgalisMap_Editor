@@ -41,11 +41,13 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 /**
- *
+ * represents the main view controller of our application.
+ * 
  * @author Alexandre 'ROKH' MAILLIU
  */
 public class MainViewController implements Initializable {
@@ -54,7 +56,7 @@ public class MainViewController implements Initializable {
    * the PaintManager who handles the interactions between views, to pick 
    * cropped images from one hand, and then draw them on the second hand.
    */
-  PaintManager pM;
+  static PaintManager pM;
 
   @FXML
   private Label label;
@@ -68,22 +70,82 @@ public class MainViewController implements Initializable {
   @FXML
   private Canvas canvas1;
 
+  static int singleton = 0;
+  
   /**
    * {@inheritDoc}
    */
   @Override
   public void initialize(URL url, ResourceBundle rb) {
-    pM = new PaintManager(canvas1, imageView1);
-    plugFunction();
+    // add PaintManager singleton pattern for sexiest code
+    if(singleton == 0) {
+      pM = new PaintManager(canvas1, imageView1);
+      pM.setTileDimension(107, 107);
+      createNewMap(4, 4);
+      singleton=1;
+    }
   }
 
   /**
-   * temporary function to plug values before we got the user to do it manually 
-   * from the GUI
+   * create a new map with a defined lineNumber and column number.
+   * 
+   * @param lineNumberNewMap the line number of our new map
+   * @param columnNumberNewMap the column number of our new map
    */
-  public void plugFunction() {
-    pM.setCanvasDimensions(4, 4, 107, 107);
-    pM.setImageViewDimension(107, 107);
+  public void createNewMap(int lineNumberNewMap, int columnNumberNewMap) {
+    pM.setCanvasDimensions(lineNumberNewMap, columnNumberNewMap);
+    pM.setImageViewDimension();
+  }
+  
+  /**
+   * open a dialog window to ask the user to select a file image as a tileSet,
+   * and also to set the width and height of the tileSet's pixels.
+   * 
+   * @param tileWidth the tiles width in pixels
+   * @param tileHeight the tiles height in pixels
+   * @param fileType the file type of the tileSet image
+   * 
+   * @return true if the tileSet file have been correctly loaded, else false
+   */
+  public boolean importTileSet(int tileWidth, int tileHeight, String fileType) {
+    // check if the user is ok width the new tile dimension
+    if(!pM.isNewTileDimensionOkForUser(tileWidth, tileHeight)) {
+      return false;
+    }
+    
+    // ask the user to load its tileSet image file
+    boolean isLoadingFileOk = false;
+    
+    switch(fileType) {
+      case "png" :
+        isLoadingFileOk = loadTileSetImageFromPNG();
+        break;
+      case "gif" :
+        isLoadingFileOk = loadTileSetImageFromGIF();
+        break;
+      case "jpg" :
+        isLoadingFileOk = loadTileSetImageFromJPG();
+        break;
+      default : // "jpeg"
+        isLoadingFileOk = loadTileSetImageFromJPEG();
+    }
+    
+    // if the loading is ok, set the views corresponding to the user's choices
+    if(isLoadingFileOk) {
+      pM.setDimensionAfterNewTileSetLoading(tileWidth, tileHeight);
+      return true;
+    }
+    return false;
+  }
+  
+  /**
+   * open the import tile set view 
+   * 
+   * @param event the onClick event 
+   */
+  @FXML
+  private void openImportTileSetView(ActionEvent event) {
+    openView("importTileSet", "Import TileSet...");
   }
   
   /**
@@ -159,6 +221,7 @@ public class MainViewController implements Initializable {
       Parent root = (Parent) fxmlLoader.load();
       Stage stage = new Stage();
       stage.setScene(new Scene(root));
+      stage.getIcons().add(new Image("res/argalis_logo.png"));
       stage.setTitle(viewTitle);
       stage.show();
     } catch (Exception e) {
@@ -175,31 +238,39 @@ public class MainViewController implements Initializable {
   }
 
   /**
-   * load a tileSet from a png file image
+   * load a tileSet from a png file image.
+   * 
+   * @return true if the tileSet file have been correctly loaded, else false
    */
-  public void loadTileSetImageFromPNG() {
-    pM.loadTileSetImageFromPNG();
+  public boolean loadTileSetImageFromPNG() {
+    return pM.loadTileSetImageFromPNG();
   }
   
   /**
-   * load a tileSet from a gif file image
+   * load a tileSet from a gif file image.
+   * 
+   * @return true if the tileSet file have been correctly loaded, else false
    */
-  public void loadTileSetImageFromGIF() {
-    pM.loadTileSetImageFromGIF();
+  public boolean loadTileSetImageFromGIF() {
+    return pM.loadTileSetImageFromGIF();
   }
   
   /**
-   * load a tileSet from a jpg file image
+   * load a tileSet from a jpg file image.
+   * 
+   * @return true if the tileSet file have been correctly loaded, else false
    */
-  public void loadTileSetImageFromJPG() {
-    pM.loadTileSetImageFromJPG();
+  public boolean loadTileSetImageFromJPG() {
+    return pM.loadTileSetImageFromJPG();
   }
   
   /**
-   * load a tileSet from a jpeg file image
+   * load a tileSet from a jpeg file image.
+   * 
+   * @return true if the tileSet file have been correctly loaded, else false
    */
-  public void loadTileSetImageFromJPEG() {
-    pM.loadTileSetImageFromJPEG();
+  public boolean loadTileSetImageFromJPEG() {
+    return pM.loadTileSetImageFromJPEG();
   }
   
   /**

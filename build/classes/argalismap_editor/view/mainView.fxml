@@ -45,24 +45,18 @@
         <Menu mnemonicParsing="false" text="File">
           <items>
             <MenuItem mnemonicParsing="false" onAction="#openNewMapView" text="New Map..." />
-            <Menu mnemonicParsing="false" text="Import TileSet">
-                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#loadTileSetImageFromPNG" text="From PNG..." />
-                        <MenuItem mnemonicParsing="false" onAction="#loadTileSetImageFromGIF" text="From GIF..." />
-                        <MenuItem mnemonicParsing="false" onAction="#loadTileSetImageFromJPG" text="From JPG..." />
-                        <MenuItem mnemonicParsing="false" onAction="#loadTileSetImageFromJPEG" text="From JPEG..." />
-                     </items></Menu>
+            <MenuItem mnemonicParsing="false" onAction="#openImportTileSetView" text="Import TileSet"/>
             <SeparatorMenuItem mnemonicParsing="false" />
-                  <Menu mnemonicParsing="false" text="Save As...">
-                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#saveMapToARGALIS" text="ARGALIS..." />
-                        <MenuItem mnemonicParsing="false" onAction="#saveMapToPNG" text="PNG..." />
-                        <MenuItem mnemonicParsing="false" onAction="#saveMapToGIF" text="GIF..." />
-                        <MenuItem mnemonicParsing="false" onAction="#saveMapToJPG" text="JPG..." />
-                        <MenuItem mnemonicParsing="false" onAction="#saveMapToJPEG" text="JPEG..." />
-                     </items>
-                  </Menu>
-            <MenuItem mnemonicParsing="false" onAction="#loadMapFromARGALIS" text="Load" />
+                <MenuItem mnemonicParsing="false" onAction="#loadMapFromARGALIS" text="Load Map..." />
+                <Menu mnemonicParsing="false" text="Save Map As...">
+                   <items>
+                      <MenuItem mnemonicParsing="false" onAction="#saveMapToARGALIS" text="ARGALIS..." />
+                      <MenuItem mnemonicParsing="false" onAction="#saveMapToPNG" text="PNG..." />
+                      <MenuItem mnemonicParsing="false" onAction="#saveMapToGIF" text="GIF..." />
+                      <MenuItem mnemonicParsing="false" onAction="#saveMapToJPG" text="JPG..." />
+                      <MenuItem mnemonicParsing="false" onAction="#saveMapToJPEG" text="JPEG..." />
+                   </items>
+                </Menu>
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" onAction="#openQuitView" text="Quit" />
           </items>
@@ -118,11 +112,11 @@
                   <VBox prefHeight="600.0" prefWidth="700.0">
                      <children>
                         <Label alignment="CENTER" contentDisplay="CENTER" text="    Map view" textAlignment="CENTER" />
-                        <ScrollPane hbarPolicy="ALWAYS" minHeight="400.0" minWidth="400.0" pannable="true" prefHeight="400.0" prefWidth="200.0" vbarPolicy="ALWAYS" VBox.vgrow="ALWAYS">
+                        <ScrollPane cache="true" hbarPolicy="ALWAYS" vbarPolicy="ALWAYS" VBox.vgrow="ALWAYS">
                            <content>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+                              <AnchorPane>
                                  <children>
-                                    <Canvas fx:id="canvas1" height="200.0" width="200.0" />
+                                    <Canvas fx:id="canvas1" height="428.0" width="428.0" />
                                  </children>
                               </AnchorPane>
                            </content>

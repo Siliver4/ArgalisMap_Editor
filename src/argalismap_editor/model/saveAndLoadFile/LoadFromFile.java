@@ -109,36 +109,40 @@ public class LoadFromFile {
    * load a png file image and put its content to the imageView
    * 
    * @param imageView the imageView we are aiming to
+   * @return true if the file have been correctly loaded, else false
    */
-  public static void loadImageFromPNG(ImageView imageView) {
-    loadImageFromFile(imageView, "png");
+  public static boolean loadImageFromPNG(ImageView imageView) {
+    return loadImageFromFile(imageView, "png");
   }
   
   /**
    * load a gif file image and put its content to the imageView
    * 
    * @param imageView the imageView we are aiming to
+   * @return true if the file have been correctly loaded, else false
    */
-  public static void loadImageFromGIF(ImageView imageView) {
-    loadImageFromFile(imageView, "gif");
+  public static boolean loadImageFromGIF(ImageView imageView) {
+    return loadImageFromFile(imageView, "gif");
   }
   
   /**
    * load a jpg file image and put its content to the imageView
    * 
    * @param imageView the imageView we are aiming to
+   * @return true if the file have been correctly loaded, else false
    */
-  public static void loadImageFromJPG(ImageView imageView) {
-    loadImageFromFile(imageView, "jpg");
+  public static boolean loadImageFromJPG(ImageView imageView) {
+    return loadImageFromFile(imageView, "jpg");
   }
   
   /**
    * load a jpeg file image and put its content to the imageView
    * 
    * @param imageView the imageView we are aiming to
+   * @return true if the file have been correctly loaded, else false
    */
-  public static void loadImageFromJPEG(ImageView imageView) {
-    loadImageFromFile(imageView, "jpeg");
+  public static boolean loadImageFromJPEG(ImageView imageView) {
+    return loadImageFromFile(imageView, "jpeg");
   }
   
   /**
@@ -148,8 +152,9 @@ public class LoadFromFile {
    * 
    * @param imageView the imageView we are aiming to
    * @param fileExtension the file extension of the image file
+   * @return true if the file have been correctly loaded, else false
    */
-  private static void loadImageFromFile(ImageView imageView, String fileExtension) {
+  private static boolean loadImageFromFile(ImageView imageView, String fileExtension) {
     try {
       File file = fileChooser(fileExtension);
       
@@ -157,10 +162,14 @@ public class LoadFromFile {
         BufferedImage bufferedImage = ImageIO.read(file);
         WritableImage writableImage = SwingFXUtils.toFXImage(bufferedImage, null);
         imageView.setImage(writableImage);
+      } else {
+        return false;
       }
     } catch (IOException e) {
         e.printStackTrace();
+        return false;
     }    
+    return true;
   }
   
   /**

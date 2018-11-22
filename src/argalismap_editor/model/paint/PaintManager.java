@@ -26,6 +26,8 @@ package argalismap_editor.model.paint;
 import argalismap_editor.model.saveAndLoadFile.LoadFromFile;
 import argalismap_editor.model.saveAndLoadFile.SaveToFile;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -37,11 +39,13 @@ import javafx.scene.image.ImageView;
  */
 public class PaintManager {
 
-  CanvasDrawing canvasDrawing;
-  ImageViewPicking imageViewPicking;
+  private CanvasDrawing canvasDrawing;
+  private ImageViewPicking imageViewPicking;
+  private int tileWidth;
+  private int tileHeight;
 
   /**
-   * Constructor
+   * Constructor.
    *
    * @param canvas the canvas from the fxml file where we want to draw things
    * @param imageView the imageView from the fxml where we want to pick up
@@ -49,29 +53,85 @@ public class PaintManager {
    */
   public PaintManager(Canvas canvas, ImageView imageView) {
     this.canvasDrawing = new CanvasDrawing(canvas, this);
-    this.imageViewPicking = new ImageViewPicking(imageView);
+    this.imageViewPicking = new ImageViewPicking(imageView, this);
   }
 
+  /**
+   * if the tile dimensions are different from the previous ones, ask the user 
+   * if he really wants to load a new map ( because it will modify its scale )
+   * 
+   * @return true if the user click on Ok or if the tile dimensions are the 
+   * same as before the call of this function. Else false.
+   */
+  public boolean isNewTileDimensionOkForUser(int tileWidth, int tileHeight) {
+    if ( (this.tileWidth == tileWidth) && (this.tileHeight == tileHeight) ) {
+      // if no tile dimensions change
+      return true;
+    } else {
+      // if there is a change in tiles dimensions, ask the user for a change
+      Alert alert = new Alert(Alert.AlertType.WARNING, "New Tiles Dimensions ! Load a new map ?", ButtonType.OK, ButtonType.CANCEL);
+      alert.showAndWait();
+      if (alert.getResult() == ButtonType.OK) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  /**
+   * set the dimensions of canvasDrawing, imageViewPicking and tiles after 
+   * a tileSet loading.
+   * 
+   * @param tileWidth the tiles width in pixels
+   * @param tileHeight the tiles height in pixels
+   */
+  public void setDimensionAfterNewTileSetLoading(int tileWidth, int tileHeight) {
+    if ( (this.tileWidth == tileWidth) && (this.tileHeight == tileHeight) ) {
+      // if no tile dimensions change
+      setTileDimension(tileWidth, tileHeight);
+      setImageViewDimension();
+    } else {
+      // if there is a change in tiles dimensions, alert the user
+      setTileDimension(tileWidth, tileHeight);
+      setCanvasDimensionsAfterNewTileSetLoading();
+      setImageViewDimension();
+    }
+  }
+  
+  /**
+   * set the tiles dimension in pixels.
+   * 
+   * @param tileWidth the tiles width in pixels
+   * @param tileHeight the tiles height in pixels
+   */
+  public void setTileDimension(int tileWidth, int tileHeight) {
+    this.tileWidth = tileWidth;
+    this.tileHeight = tileHeight;
+  }
+  
   /**
    * Set the dimension of canvasDrawing.
    *
    * @param lineNb the line number of canvasDrawing
    * @param columnNb the column number of canvasDrawing
-   * @param tileWidth the tile width in pixel
-   * @param tileHeight the tile height in pixel
    */
-  public void setCanvasDimensions(int lineNb, int columnNb, int tileWidth, int tileHeight) {
-    canvasDrawing.setDimension(lineNb, columnNb, tileWidth, tileHeight);
+  public void setCanvasDimensions(int lineNb, int columnNb) {
+    canvasDrawing.setDimension(lineNb, columnNb);
+  }
+  
+  /**
+   * Set the dimension of canvasDrawing after loading a new tileSet.
+   */
+  public void setCanvasDimensionsAfterNewTileSetLoading() {
+    canvasDrawing.setCanvasDimensionsAfterNewTileSetLoading();
   }
 
   /**
    * Set the dimension of this ImageViewPicking.
    *
-   * @param tileWidth the tile width in pixel
-   * @param tileHeight the tile height in pixel
    */
-  public void setImageViewDimension(int tileWidth, int tileHeight) {
-    imageViewPicking.setDimension(tileWidth, tileHeight);
+  public void setImageViewDimension() {
+    imageViewPicking.setDimension();
   }
 
   /**
@@ -103,31 +163,39 @@ public class PaintManager {
   }
   
   /**
-   * load a tileSet from a png file image and put its content to the imageView
+   * load a tileSet from a png file image and put its content to the imageView.
+   * 
+   * @return true if the tileSet file have been correctly loaded, else false
    */
-  public void loadTileSetImageFromPNG() {
-    imageViewPicking.loadImageFromPNG();
+  public boolean loadTileSetImageFromPNG() {
+    return imageViewPicking.loadImageFromPNG();
   }
   
   /**
-   * load a tileSet from a gif file image and put its content to the imageView
+   * load a tileSet from a gif file image and put its content to the imageView.
+   * 
+   * @return true if the tileSet file have been correctly loaded, else false
    */
-  public void loadTileSetImageFromGIF() {
-    imageViewPicking.loadImageFromGIF();
+  public boolean loadTileSetImageFromGIF() {
+    return imageViewPicking.loadImageFromGIF();
   }
   
   /**
-   * load a tileSet from a jpg file image and put its content to the imageView
+   * load a tileSet from a jpg file image and put its content to the imageView.
+   * 
+   * @return true if the tileSet file have been correctly loaded, else false
    */
-  public void loadTileSetImageFromJPG() {
-    imageViewPicking.loadImageFromJPG();
+  public boolean loadTileSetImageFromJPG() {
+    return imageViewPicking.loadImageFromJPG();
   }
   
   /**
-   * load a tileSet from a jpeg file image and put its content to the imageView
+   * load a tileSet from a jpeg file image and put its content to the imageView.
+   * 
+   * @return true if the tileSet file have been correctly loaded, else false
    */
-  public void loadTileSetImageFromJPEG() {
-    imageViewPicking.loadImageFromJPEG();
+  public boolean loadTileSetImageFromJPEG() {
+    return imageViewPicking.loadImageFromJPEG();
   }
   
   /**
@@ -165,4 +233,13 @@ public class PaintManager {
   public void saveMapToJPEG() {
     canvasDrawing.saveToJPEG();
   }
+
+  public int getTileWidth() {
+    return tileWidth;
+  }
+
+  public int getTileHeight() {
+    return tileHeight;
+  }
+  
 }

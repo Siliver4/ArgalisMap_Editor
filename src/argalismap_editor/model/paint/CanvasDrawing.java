@@ -27,8 +27,10 @@ import argalismap_editor.model.saveAndLoadFile.LoadFromFile;
 import argalismap_editor.model.saveAndLoadFile.SaveToFile;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 
 /**
  * represents the Canvas from the fxml file and its functionalities, such as
@@ -43,8 +45,6 @@ public class CanvasDrawing {
 
   private int lineNb;
   private int columnNb;
-  private int tileWidth;
-  private int tileHeight;
 
   /**
    * represents the entire canvas tile value in a 1 dimension array
@@ -69,17 +69,26 @@ public class CanvasDrawing {
    *
    * @param lineNb the line number of canvas
    * @param columnNb the column number of canvas
-   * @param tileWidth the tile width in pixel
-   * @param tileHeight the tile height in pixel
    */
-  public void setDimension(int lineNb, int columnNb, int tileWidth, int tileHeight) {
+  public void setDimension(int lineNb, int columnNb) {
     this.lineNb = lineNb;
     this.columnNb = columnNb;
-    this.tileWidth = tileWidth;
-    this.tileHeight = tileHeight;
-    canvas.setHeight(lineNb * tileHeight);
-    canvas.setWidth(columnNb * tileWidth);
-    tileValues = new int[lineNb * columnNb];
+    canvas.setHeight(lineNb * pM.getTileHeight());
+    canvas.setWidth(columnNb * pM.getTileWidth());
+    setDefaultTileValues(lineNb, columnNb);
+    
+    // set default background white color
+    setDefaultCanvasBackground();
+  }
+  
+  /**
+   * recalculate the dimension of the tileValues table attribute and of 
+   * the canvas after loading a new tileSet.
+   * Called in the paintManager if only there is a change in the tileSet 
+   * dimensions.
+   */
+  public void setCanvasDimensionsAfterNewTileSetLoading() {
+    setDimension(lineNb, columnNb);
   }
   
   public void saveToFileFromIntegerTable() {
@@ -149,8 +158,8 @@ public class CanvasDrawing {
       tileValues[index] = pM.getSelectedTileValue();
 
       // draw the tile
-      int xCanvas = xIndex * tileWidth;
-      int yCanvas = yIndex * tileHeight;
+      int xCanvas = xIndex * pM.getTileWidth();
+      int yCanvas = yIndex * pM.getTileHeight();
       drawTile(pM.getSelectedTile(), xCanvas, yCanvas);
     }
   }
@@ -168,18 +177,41 @@ public class CanvasDrawing {
     if ((posX < canvas.getWidth()) && (posY < canvas.getHeight()) && (posX >= 0) && (posY >= 0)) {
 
       // set the tile value
-      int xTabIndex = posX / tileWidth;
-      int yTabIndex = posY / tileHeight;
+      int xTabIndex = posX / pM.getTileWidth();
+      int yTabIndex = posY / pM.getTileHeight();
       int index = xTabIndex + yTabIndex * columnNb;
       tileValues[index] = pM.getSelectedTileValue();
 
       // draw the tile
-      int xCanvas = xTabIndex * tileWidth;
-      int yCanvas = yTabIndex * tileHeight;
+      int xCanvas = xTabIndex * pM.getTileWidth();
+      int yCanvas = yTabIndex * pM.getTileHeight();
       drawTile(pM.getSelectedTile(), xCanvas, yCanvas);
     }
   }
 
+  /**
+   * create the tileValues table, and set its values to -1, meaning the tiles 
+   * haven't be drawn with true values from the tileSet.
+   * 
+   * @param lineNb the line number in our table
+   * @param columnNb the column number in our table
+   */
+  private void setDefaultTileValues(int lineNb, int columnNb) {
+    this.tileValues = new int[lineNb * columnNb];
+    for(int value : tileValues) {
+      value = -1;
+    }
+  }
+
+  /**
+   * set the default background color
+   */
+  private void setDefaultCanvasBackground() {
+    GraphicsContext gc = canvas.getGraphicsContext2D();
+    canvas.getGraphicsContext2D().setFill(Color.WHITE);
+    gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+  }
+  
   /**
    * initialize the onMouse Handler for this Object
    */
@@ -215,14 +247,6 @@ public class CanvasDrawing {
 
   public int getColumnNb() {
     return columnNb;
-  }
-
-  public int getTileWidth() {
-    return tileWidth;
-  }
-
-  public int getTileHeight() {
-    return tileHeight;
   }
 
 }

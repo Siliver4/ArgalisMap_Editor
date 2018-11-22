@@ -42,10 +42,10 @@ import javafx.scene.paint.Color;
 public class ImageViewPicking {
 
   private final ImageView imageView;
+  private final PaintManager pM;
+  
   private int lineNb;
   private int columnNb;
-  private int tileWidth;
-  private int tileHeight;
   private int lineSelected;
   private int columnSelected;
 
@@ -64,8 +64,9 @@ public class ImageViewPicking {
    *
    * @param imageView the ImageView from the fxml file
    */
-  public ImageViewPicking(ImageView imageView) {
+  public ImageViewPicking(ImageView imageView, PaintManager pM) {
     this.imageView = imageView;
+    this.pM = pM;
     this.lineSelected = 0;
     this.columnSelected = 0;
     initializeHandler();
@@ -73,43 +74,47 @@ public class ImageViewPicking {
 
   /**
    * Set the dimension of this ImageViewPicking.
-   *
-   * @param tileWidth the tile width in pixel
-   * @param tileHeight the tile height in pixel
    */
-  public void setDimension(int tileWidth, int tileHeight) {
-    this.tileWidth = tileWidth;
-    this.tileHeight = tileHeight;
-    this.lineNb = (int) imageView.getImage().getHeight() / tileHeight;
-    this.columnNb = (int) imageView.getImage().getWidth() / tileWidth;
+  public void setDimension() {
+    this.lineNb = (int) imageView.getImage().getHeight() / pM.getTileHeight();
+    this.columnNb = (int) imageView.getImage().getWidth() / pM.getTileWidth();
   }
 
   /**
-   * load a tileSet from a png file image and put its content to the imageView
+   * load a tileSet from a png file image and put its content to the imageView.
+   * 
+   * @return true if the file have been correctly loaded, else false
    */
-  public void loadImageFromPNG() {
-    LoadFromFile.loadImageFromPNG(imageView);
+  public boolean loadImageFromPNG() {
+    return LoadFromFile.loadImageFromPNG(imageView);
   }
   
   /**
-   * load a tileSet from a gif file image and put its content to the imageView
+   * load a tileSet from a gif file image and put its content to the imageView.
+   * 
+   * @return true if the file have been correctly loaded, else false
+   * 
    */
-  public void loadImageFromGIF() {
-    LoadFromFile.loadImageFromGIF(imageView);
+  public boolean loadImageFromGIF() {
+    return LoadFromFile.loadImageFromGIF(imageView);
   }
   
   /**
-   * load a tileSet from a jpg file image and put its content to the imageView
+   * load a tileSet from a jpg file image and put its content to the imageView.
+   * 
+   * @return true if the file have been correctly loaded, else false
    */
-  public void loadImageFromJPG() {
-    LoadFromFile.loadImageFromJPG(imageView);
+  public boolean loadImageFromJPG() {
+    return LoadFromFile.loadImageFromJPG(imageView);
   }
   
   /**
-   * load a tileSet from a jpeg file image and put its content to the imageView
+   * load a tileSet from a jpeg file image and put its content to the imageView.
+   * 
+   * @return true if the file have been correctly loaded, else false
    */
-  public void loadImageFromJPEG() {
-    LoadFromFile.loadImageFromJPEG(imageView);
+  public boolean loadImageFromJPEG() {
+    return LoadFromFile.loadImageFromJPEG(imageView);
   }
   
   /**
@@ -140,10 +145,10 @@ public class ImageViewPicking {
   private void pickTile(int xTabIndex, int yTabIndex) {
       SnapshotParameters parameters = new SnapshotParameters();
       parameters.setFill(Color.WHITE);
-      int xImageView = xTabIndex * tileWidth;
-      int yImageView = yTabIndex * tileHeight;
-      parameters.setViewport(new Rectangle2D(xImageView, yImageView, tileWidth, tileHeight));
-      tileSelected = new WritableImage(tileWidth, tileHeight);
+      int xImageView = xTabIndex * pM.getTileWidth();
+      int yImageView = yTabIndex * pM.getTileHeight();
+      parameters.setViewport(new Rectangle2D(xImageView, yImageView, pM.getTileWidth(), pM.getTileHeight()));
+      tileSelected = new WritableImage(pM.getTileWidth(), pM.getTileHeight());
       imageView.snapshot(parameters, tileSelected);
   }
   
@@ -178,8 +183,8 @@ public class ImageViewPicking {
     if ((posX < imageView.getImage().getWidth()) && (posY < imageView.getImage().getHeight()) && (posX >= 0) && (posY >= 0)) {
 
       // set the selected tile value
-      int xTabIndex = posX / tileWidth;
-      int yTabIndex = posY / tileHeight;
+      int xTabIndex = posX / pM.getTileWidth();
+      int yTabIndex = posY / pM.getTileHeight();
       tileSelectedValue = xTabIndex + yTabIndex * columnNb;
 
       // pick up the tile as a cropped image from the ImageView
@@ -223,14 +228,6 @@ public class ImageViewPicking {
 
   public int getColumnNb() {
     return columnNb;
-  }
-
-  public int getTileWidth() {
-    return tileWidth;
-  }
-
-  public int getTileHeight() {
-    return tileHeight;
   }
   
 }

@@ -29,12 +29,15 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -43,25 +46,34 @@ import javafx.stage.Stage;
  *
  * @author Alexandre 'ROKH' MAILLIU
  */
-public class NewMapViewController implements Initializable {
+public class ImportTileSetViewController implements Initializable {
 
   private final static int VALID_FIELDS = 0;
   private final static int EMPTY_FIELDS = 1;
   private final static int NOT_POSITIVE_NUMBER_FIELDS = 2;
   
+  /**
+   * the list of values for the ChoiceBox_importTileSetFileType
+   */
+  ObservableList<String> fileTypeList = FXCollections.observableArrayList("png", "gif", "jpg", "jpeg");
+  
   @FXML
-  private TextField TextField_lineNumberNewMap, TextField_columnNumberNewMap;
+  private TextField TextField_tileWidthInPixel, TextField_tileHeightInPixel;
+  
+  @FXML
+  private ChoiceBox ChoiceBox_importTileSetFileType;
   
   /**
    * Initializes the controller class.
    */
   @Override
   public void initialize(URL url, ResourceBundle rb) {
-    
+    ChoiceBox_importTileSetFileType.setValue("png");
+    ChoiceBox_importTileSetFileType.setItems(fileTypeList);
   }
   
   @FXML
-  private void handleNewMapButtonAction(ActionEvent event) {
+  private void handleImportTileSetButtonAction(ActionEvent event) {
     
     int fieldsValidity = checkFieldValidity();
     
@@ -85,10 +97,11 @@ public class NewMapViewController implements Initializable {
     }
     
     // from here all the parameters are ok
-    String lineNumberNewMap = TextField_lineNumberNewMap.getText();
-    String columnNumberNewMap = TextField_columnNumberNewMap.getText();
-    int lineNumber = Integer.parseInt(lineNumberNewMap);
-    int columnNumber = Integer.parseInt(columnNumberNewMap);
+    String tileWidthInPixel = TextField_tileWidthInPixel.getText();
+    String tileHeightInPixel = TextField_tileHeightInPixel.getText();
+    String fileType = (String) ChoiceBox_importTileSetFileType.getValue();
+    int tileWidth = Integer.parseInt(tileWidthInPixel);
+    int tileHeight = Integer.parseInt(tileHeightInPixel);
     
     FXMLLoader loader = new FXMLLoader();
     loader.setLocation(getClass().getResource("/argalismap_editor/view/mainView.fxml"));
@@ -98,8 +111,11 @@ public class NewMapViewController implements Initializable {
       Logger.getLogger(NewMapViewController.class.getName()).log(Level.SEVERE, null, e);
     }
     MainViewController mainViewController = loader.getController();
-    mainViewController.createNewMap(lineNumber, columnNumber);
-    closeStage();
+    
+    // if tileSet file loading is correctly done, then close the stage
+    if(mainViewController.importTileSet(tileWidth, tileHeight, fileType)) {
+      closeStage();
+    }
   }
 
   /**
@@ -108,11 +124,11 @@ public class NewMapViewController implements Initializable {
    * @return true if the fields are not valid, else true
    */
   private int checkFieldValidity() {
-    if(TextField_lineNumberNewMap.getText().isEmpty()) return EMPTY_FIELDS;
-    if(TextField_columnNumberNewMap.getText().isEmpty()) return EMPTY_FIELDS;
+    if(TextField_tileWidthInPixel.getText().isEmpty()) return EMPTY_FIELDS;
+    if(TextField_tileHeightInPixel.getText().isEmpty()) return EMPTY_FIELDS;
     // check if its not a positive number
-    if(!TextField_lineNumberNewMap.getText().matches("\\d*")) return NOT_POSITIVE_NUMBER_FIELDS;
-    if(!TextField_lineNumberNewMap.getText().matches("\\d*")) return NOT_POSITIVE_NUMBER_FIELDS;
+    if(!TextField_tileWidthInPixel.getText().matches("\\d*")) return NOT_POSITIVE_NUMBER_FIELDS;
+    if(!TextField_tileHeightInPixel.getText().matches("\\d*")) return NOT_POSITIVE_NUMBER_FIELDS;
     return VALID_FIELDS;
   }
   
@@ -121,7 +137,7 @@ public class NewMapViewController implements Initializable {
    */
   private void closeStage() {
     // get a handle to the stage
-    Stage stage = (Stage) TextField_lineNumberNewMap.getScene().getWindow();
+    Stage stage = (Stage) ChoiceBox_importTileSetFileType.getScene().getWindow();
     stage.close();
   }
 }
