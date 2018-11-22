@@ -1,6 +1,6 @@
 <h1 align="center">
     <br>
-      <a href="https://github.com/Siliver4/ArgalisMap_Editor/src/res/argalis_logo.png">
+      <a href="src/res/argalis_logo.png">
         <img src="src/res/argalis_logo.png" alt="ArgalisMap_Editor_logo" width="200">
       </a>
     <br>
@@ -27,7 +27,7 @@ Map editor for 2D Games
       Application full screen exemple :
     <br>
     <br>
-      <a href="https://github.com/Siliver4/ArgalisMap_Editor">
+      <a href="argalis_demo/Screenshot_FullScreen.png">
         <img src="argalis_demo/Screenshot_FullScreen.png" alt="ArgalisMap_Editor_FullScreenExemple" width="747">
       </a>
     <br>
@@ -38,7 +38,7 @@ Map editor for 2D Games
       You can save it as a png, gif, jpg, jpeg file format :
     <br>
     <br>
-      <a href="https://github.com/Siliver4/ArgalisMap_Editor">
+      <a href="argalis_demo/FirstCity.png">
         <img src="argalis_demo/FirstCity.png" alt="ArgalisMap_Editor_PngSaveExemple" width="300px">
       </a>
     <br>
@@ -49,7 +49,7 @@ Map editor for 2D Games
       For memory sake you can also save it as an '.argalis' file :
     <br>
     <br>
-      <a href="https://github.com/Siliver4/ArgalisMap_Editor">
+      <a href="argalis_demo/FirstCityArgalis.png">
         <img src="argalis_demo/FirstCityArgalis.png" alt="ArgalisMap_Editor_ArgalisSaveExemple" width="300px">
       </a>
     <br>
