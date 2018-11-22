@@ -22,32 +22,35 @@ Map editor for 2D Games
 - using Java 8.0
 - using JavaFX & Scene Builder
 
-<h1 align="center">
+<h2 align="center">
     <br>
       Application full screen exemple :
+    <br>
     <br>
       <a href="https://github.com/Siliver4/ArgalisMap_Editor">
         <img src="argalis_demo/Screenshot_FullScreen.png" alt="ArgalisMap_Editor_FullScreenExemple" width="747">
       </a>
     <br>
-</h1>
+</h2>
 
-<h1 align="center">
+<h2 align="center">
     <br>
       You can save it as a png, gif, jpg, jpeg file format :
+    <br>
     <br>
       <a href="https://github.com/Siliver4/ArgalisMap_Editor">
         <img src="argalis_demo/FirstCity.png" alt="ArgalisMap_Editor_PngSaveExemple" width="300px">
       </a>
     <br>
-</h1>
+</h2>
 
-<h1 align="center">
+<h2 align="center">
     <br>
       For memory sake you can also save it as an '.argalis' file :
+    <br>
     <br>
       <a href="https://github.com/Siliver4/ArgalisMap_Editor">
         <img src="argalis_demo/FirstCityArgalis.png" alt="ArgalisMap_Editor_ArgalisSaveExemple" width="300px">
       </a>
     <br>
-</h1>
+</h2>
