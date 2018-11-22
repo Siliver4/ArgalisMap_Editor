@@ -21,6 +21,7 @@ Map editor for 2D Games
 - using Netbeans IDE (first time)
 - using Java 8.0
 - using JavaFX & Scene Builder
+- using checkStyle
 
 <h2 align="center">
     <br>
